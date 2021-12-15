@@ -12,6 +12,11 @@ app.use(express.static(join(__dirname, 'client')));
 
 app.use(routes);
 
+app.use((err, req, res, next) => {
+  res.sendStatus(500);
+  console.error(err);
+});
+
 const port = 3000;
 database.connect().then((result) => {
   console.log(result);

@@ -8,9 +8,19 @@ router.post('/api/users/signup', userController.createUser);
 
 router.post('/api/users/login', authController.login);
 
-router.use('/api/todos/', authController.authenticateToken);
-router.route('/api/todos/').get((req, res) => {
-  res.send('here your task');
-});
+const tasksUri = '/api/tasks';
+router.use(tasksUri, authController.authenticateToken);
+
+router
+  .route(tasksUri)
+  .get(taskController.getTasks)
+  .delete(taskController.deleteTask);
+
+router.use(tasksUri, taskController.validateInput);
+
+router
+  .route(tasksUri)
+  .post(taskController.createTask)
+  .patch(taskController.editTask);
 
 module.exports = router;

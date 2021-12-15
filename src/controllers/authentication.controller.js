@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.login = async (req, res) => {
+  const { userId } = req;
+  if (userId) return res.status(400).json({ error: 'already logged in' });
   const { username, password } = req.body;
 
   const user = await User.findOne({ username });
@@ -27,9 +29,9 @@ exports.authenticateToken = (req, res, next) => {
   const token = req.headers['authorization']?.split(' ')[1];
   if (!token) return res.status(401).json({ error: 'Not logged in' });
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, userId) => {
+  jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, tokenObj) => {
     if (err) return res.sendStatus(403);
-    req.userId = userId;
+    req.userId = tokenObj.userId;
     next();
   });
 };

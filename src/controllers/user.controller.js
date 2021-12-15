@@ -14,7 +14,7 @@ exports.validateInput = (req, res, next) => {
       'Password must be at least 3 characters and not contains spaces';
 
   if (error.username || error.password) {
-    return res.status(400).json(error);
+    return res.status(400).json({ error });
   }
 
   next();

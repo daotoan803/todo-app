@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
-exports.Task = mongoose.model('tasks', {
+const Task = mongoose.model('tasks', {
+  userId: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     trim: true,
@@ -16,3 +20,5 @@ exports.Task = mongoose.model('tasks', {
     default: false,
   },
 });
+
+module.exports = Task;
