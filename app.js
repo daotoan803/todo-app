@@ -3,7 +3,7 @@ const app = express();
 const session = require('express-session');
 const { join } = require('path');
 
-const database = require('./src/models/database');
+const database = require('./src/database/database');
 const routes = require('./src/routes');
 
 app.use(express.json());
