@@ -1,9 +1,13 @@
 const router = require('express').Router();
+const userController = require('../controllers/user.controller');
+const taskController = require('../controllers/task.controller');
+const authController = require('../controllers/authentication.controller');
 
-const todoRoutes = require('./todo.routes');
-const userRoutes = require('./user.routes');
+router.route('/api/todos');
 
-router.use('/api/todos', todoRoutes);
-router.use('/api/users', userRoutes);
+router.route('/api/users/*', userController.validateInput);
+router.post('/api/users/signup', userController.createUser);
+
+router.post('/api/users/login', authController.login);
 
 module.exports = router;
