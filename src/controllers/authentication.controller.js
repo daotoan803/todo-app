@@ -15,15 +15,21 @@ exports.login = async (req, res) => {
     return res.status(400).json({ error: 'Wrong username or password' });
   }
 
-  const key = process.env.ACCESS_TOKEN_KEY;
-  console.log(key);
-
   const accessToken = jwt.sign(
     { userId: user.id },
     process.env.ACCESS_TOKEN_KEY,
-    {
-      expiresIn: '30d',
-    }
+    { expiresIn: '30d' }
   );
   res.json({ accessToken });
+};
+
+exports.authenticateToken = (req, res, next) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'Not logged in' });
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, userId) => {
+    if (err) return res.sendStatus(403);
+    req.userId = userId;
+    next();
+  });
 };
