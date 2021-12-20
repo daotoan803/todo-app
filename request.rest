@@ -1,5 +1,5 @@
 ###Signup
-POST http://localhost:3000/api/users/signup
+POST http://localhost:4000/api/users/signup
 content-type: application/json
 
 {
@@ -8,7 +8,7 @@ content-type: application/json
 }
 
 ### Login
-POST http://localhost:3000/api/users/login
+POST http://localhost:4000/api/users/login
 content-type: application/json
 
 {
@@ -17,11 +17,11 @@ content-type: application/json
 }
 
 ### Get task
-GET http://localhost:3000/api/tasks
+GET http://localhost:4000/api/tasks
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI5ZjgzMzNiZWMzMmEzMjRlYmIyYjUiLCJpYXQiOjE2Mzk1NzgzOTYsImV4cCI6MTY0MjE3MDM5Nn0.kdtR86T443IgW51eI8gZBszZyNRb3CkcSR0slqRFjIs
 
 ### Create new Task
-POST http://localhost:3000/api/tasks
+POST http://localhost:4000/api/tasks
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI5ZjgzMzNiZWMzMmEzMjRlYmIyYjUiLCJpYXQiOjE2Mzk1NzgzOTYsImV4cCI6MTY0MjE3MDM5Nn0.kdtR86T443IgW51eI8gZBszZyNRb3CkcSR0slqRFjIs
 content-type: application/json
  
@@ -31,7 +31,7 @@ content-type: application/json
  }
 
 ### Edit a task
-PATCH http://localhost:3000/api/tasks
+PATCH http://localhost:4000/api/tasks
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI5ZjgzMzNiZWMzMmEzMjRlYmIyYjUiLCJpYXQiOjE2Mzk1NzgzOTYsImV4cCI6MTY0MjE3MDM5Nn0.kdtR86T443IgW51eI8gZBszZyNRb3CkcSR0slqRFjIs
 content-type: application/json
  
@@ -43,7 +43,7 @@ content-type: application/json
 }
 
 ### Delete task
-DELETE  http://localhost:3000/api/tasks
+DELETE  http://localhost:4000/api/tasks
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWI5ZjgzMzNiZWMzMmEzMjRlYmIyYjUiLCJpYXQiOjE2Mzk1NzgzOTYsImV4cCI6MTY0MjE3MDM5Nn0.kdtR86T443IgW51eI8gZBszZyNRb3CkcSR0slqRFjIs
 content-type: application/json
  

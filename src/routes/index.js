@@ -5,8 +5,8 @@ const authController = require('../controllers/authentication.controller');
 
 router.use('/api/users/', userController.validateInput);
 router.post('/api/users/signup', userController.createUser);
-
 router.post('/api/users/login', authController.login);
+router.post('/api/users/verify', authController.checkValidToken);
 
 const tasksUri = '/api/tasks';
 router.use(tasksUri, authController.authenticateToken);
