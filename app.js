@@ -17,10 +17,10 @@ app.use((err, req, res, next) => {
   console.error(err);
 });
 
-const port = 4000;
+const port = process.env.PORT || 4000;
 database.connect().then((result) => {
   console.log(result);
   app.listen(port, () =>
-    console.log('Server running on http://localhost:4000')
+    console.log('Server running on http://localhost:' + port)
   );
 });
