@@ -9,16 +9,19 @@ exports.login = async (req, res) => {
 
   const user = await User.findOne({ username });
   if (!user)
-    return res.status(404).json({ error: 'Wrong username or password' });
+    return res.status(400).json({ error: 'Wrong username or password' });
 
   const passwordIsCorrect = await bcrypt.compare(password, user.password);
   if (!passwordIsCorrect)
-    return res.status(404).json({ error: 'Wrong username or password' });
+    return res.status(400).json({ error: 'Wrong username or password' });
 
   const accessToken = jwt.sign(
-    { userId: user.id, username: user.username },
-    process.env.ACCESS_TOKEN_KEY,
-    { expiresIn: '30d' }
+    {
+      userId: user.id,
+      username: user.username,
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
+    },
+    process.env.ACCESS_TOKEN_KEY
   );
   res.json({ accessToken, username: user.username });
 };

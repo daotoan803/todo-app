@@ -15,7 +15,11 @@ const Task = mongoose.model('tasks', {
     trim: true,
     required: true,
   },
-  state: {
+  finished: {
+    type: Boolean,
+    default: false,
+  },
+  important: {
     type: Boolean,
     default: false,
   },

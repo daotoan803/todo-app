@@ -3,10 +3,14 @@ const userController = require('../controllers/user.controller');
 const taskController = require('../controllers/task.controller');
 const authController = require('../controllers/authentication.controller');
 
+router.post(
+  '/api/users/verifyToken',
+  authController.authenticateToken,
+  authController.checkValidToken
+);
 router.use('/api/users/', userController.validateInput);
 router.post('/api/users/signup', userController.createUser);
 router.post('/api/users/login', authController.login);
-router.post('/api/users/verify', authController.checkValidToken);
 
 const tasksUri = '/api/tasks';
 router.use(tasksUri, authController.authenticateToken);
@@ -14,13 +18,9 @@ router.use(tasksUri, authController.authenticateToken);
 router
   .route(tasksUri)
   .get(taskController.getTasks)
-  .delete(taskController.deleteTask);
-
-router.use(tasksUri, taskController.validateInput);
-
-router
-  .route(tasksUri)
-  .post(taskController.createTask)
+  .delete(taskController.deleteTask)
   .patch(taskController.editTask);
+
+router.post(tasksUri, taskController.validateInput, taskController.createTask);
 
 module.exports = router;

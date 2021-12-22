@@ -1,16 +1,21 @@
 const Task = require('../models/task.model');
+const { CastError } = require('mongoose');
 
 const errorHandler = (res, e) => {
   res.status(500).json({ error: 'Something happen, try again later' });
+  if (e instanceof CastError) return;
   console.error(e);
 };
 
-const formatTaskToResponse = (task) => ({
-  id: task.id,
-  title: task.title,
-  detail: task.detail,
-  state: task.state,
-});
+const formatTaskToResponse = (task) => {
+  const formattedTask = {
+    ...task._doc,
+    id: task.id,
+  };
+  delete formattedTask._id;
+  return formattedTask;
+};
+
 exports.validateInput = (req, res, next) => {
   const { title, detail } = req.body;
   const error = {};
@@ -46,16 +51,19 @@ exports.getTasks = async (req, res) => {
 
 exports.editTask = async (req, res) => {
   const { userId } = req;
-  const { id, title, detail, state } = req.body;
+  const { id, title, detail, finished, important } = req.body;
 
   try {
     const task = await Task.findById(id);
-    if (!task) return res.status(404);
-    if (task.userId !== userId) return res.status(401);
+    if (!task) return res.status(404).json({ error: 'Task not found' });
+    if (task.userId !== userId)
+      return res.status(401).json({ error: 'Permission denied' });
 
-    task.title = title;
-    task.detail = detail;
-    task.state = state === '0' ? false : true;
+    task.title = title?.trim() ? task : task.title;
+    task.detail = detail?.trim() ? detail : task.detail;
+    task.finished = finished ?? task.finished;
+    task.important = important ?? task.important;
+
     await task.save();
     res.status(200).json(formatTaskToResponse(task));
   } catch (e) {
@@ -68,7 +76,7 @@ exports.deleteTask = async (req, res) => {
   const { id } = req.body;
   try {
     await Task.deleteOne({
-      id,
+      _id: id,
       userId,
     });
     res.sendStatus(200);
