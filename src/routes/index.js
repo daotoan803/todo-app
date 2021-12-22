@@ -25,7 +25,7 @@ router
 router.post(tasksUri, taskController.validateInput, taskController.createTask);
 
 router.use('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', '..', 'client', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', '..', 'public', 'index.html'));
 });
 
 module.exports = router;
