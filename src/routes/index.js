@@ -2,6 +2,7 @@ const router = require('express').Router();
 const userController = require('../controllers/user.controller');
 const taskController = require('../controllers/task.controller');
 const authController = require('../controllers/authentication.controller');
+const path = require('path');
 
 router.post(
   '/api/users/verifyToken',
@@ -22,5 +23,9 @@ router
   .patch(taskController.editTask);
 
 router.post(tasksUri, taskController.validateInput, taskController.createTask);
+
+router.use('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', '..', 'client', 'index.html'));
+});
 
 module.exports = router;

@@ -59,7 +59,7 @@ exports.editTask = async (req, res) => {
     if (task.userId !== userId)
       return res.status(401).json({ error: 'Permission denied' });
 
-    task.title = title?.trim() ? task : task.title;
+    task.title = title?.trim() ? title : task.title;
     task.detail = detail?.trim() ? detail : task.detail;
     task.finished = finished ?? task.finished;
     task.important = important ?? task.important;
