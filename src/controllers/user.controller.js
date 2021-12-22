@@ -27,7 +27,8 @@ exports.validateInput = (req, res, next) => {
 };
 
 exports.createUser = async (req, res) => {
-  const { username, password } = req.body;
+  let { username, password } = req.body;
+  username = username.toLowerCase();
 
   const usernameIsExists = await User.findOne({ username });
 

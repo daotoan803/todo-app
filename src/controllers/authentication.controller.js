@@ -8,7 +8,8 @@ const ACCESS_TOKEN_KEY =
 exports.login = async (req, res) => {
   const { userId } = req;
   if (userId) return res.status(400).json({ error: 'already logged in' });
-  const { username, password } = req.body;
+  let { username, password } = req.body;
+  username = username.toLowerCase();
 
   const user = await User.findOne({ username });
   if (!user)
